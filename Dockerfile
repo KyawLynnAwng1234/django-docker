@@ -11,8 +11,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
-# Railway injects PORT automatically
+# Railway will inject PORT automatically
 EXPOSE 8000
-ENV PORT=8000
 
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:${PORT}"]
+CMD gunicorn myproject.wsgi:application --bind 0.0.0.0:$PORT
