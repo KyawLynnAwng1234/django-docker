@@ -20,10 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-gkrq4g1jhlagt^rw51t!e-@gp_*0ls0sd&@rg9y78u8jv$p=-0'
-SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+def _csv(name, default):
+    return [h.strip() for h in os.getenv(name, default).split(",") if h.strip()]
+
+ALLOWED_HOSTS = _csv("ALLOWED_HOSTS", ".up.railway.app,127.0.0.1,localhost")
+CSRF_TRUSTED_ORIGINS = _csv("CSRF_TRUSTED_ORIGINS", "https://*.up.railway.app")
 # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
